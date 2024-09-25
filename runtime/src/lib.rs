@@ -266,13 +266,20 @@ mod runtime {
 	pub type Timestamp = pallet_timestamp;
 	#[runtime::pallet_index(3)]
 	pub type ParachainInfo = parachain_info;
+	#[runtime::pallet_index(4)]
+	pub type Utility = pallet_utility;
+	#[runtime::pallet_index(5)]
+	pub type Proxy = pallet_proxy;
+	#[runtime::pallet_index(6)]
+	pub type Multisig = pallet_multisig;
 
 	// Monetary stuff.
 	#[runtime::pallet_index(10)]
 	pub type Balances = pallet_balances;
 	#[runtime::pallet_index(11)]
 	pub type TransactionPayment = pallet_transaction_payment;
-	// TODO: Add Assets, Multisig, utility, proxy
+	#[runtime::pallet_index(12)]
+	pub type Assets = pallet_assets;
 	// Governance
 	#[runtime::pallet_index(15)]
 	pub type Sudo = pallet_sudo;
