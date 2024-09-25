@@ -23,7 +23,7 @@
       ]
     },
     "parachainInfo": {
-      "parachainId": 4428
+      "parachainId": 4506
     },
     "polkadotXcm": {
       "safeXcmVersion": 4
@@ -48,6 +48,5 @@
     },
     "sudo": {
       "key": "5EXbqYi8soYTWwVsTXBRRc7YVmUJFsEqzw8bmeFQLbX8AKBZ"
-    },
-    "treasury": {}
+    }
   }
