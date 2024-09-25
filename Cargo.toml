@@ -90,6 +90,7 @@ pallet-balances = { version = "38.0.0", default-features = false }
 pallet-assets = { version = "39.0.0", default-features = false }
 pallet-multisig = { version = "37.0.0", default-features = false }
 pallet-utility = { version = "37.0.0", default-features = false }
+pallet-identity = { version = "37.0.0", default-features = false }
 pallet-proxy = { version = "37.0.0", default-features = false }
 pallet-collator-selection = { version = "18.0.0", default-features = false }
 pallet-message-queue = { version = "40.0.0", default-features = false }

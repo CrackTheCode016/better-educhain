@@ -2778,6 +2778,7 @@ dependencies = [
  "pallet-authorship",
  "pallet-balances",
  "pallet-collator-selection",
+ "pallet-identity",
  "pallet-message-queue",
  "pallet-multisig",
  "pallet-parachain-template",

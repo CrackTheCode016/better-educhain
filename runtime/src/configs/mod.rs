@@ -38,7 +38,8 @@ mod currency_helper {
 // Substrate and Polkadot dependencies
 use cumulus_pallet_parachain_system::RelayNumberMonotonicallyIncreases;
 use cumulus_primitives_core::{AggregateMessageOrigin, ParaId};
-use crate::OriginCaller;
+use crate::{OriginCaller, Signature, DAYS};
+use pallet_identity::legacy::IdentityInfo;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use frame_support::{
@@ -62,7 +63,7 @@ use polkadot_runtime_common::{
 	xcm_sender::NoPriceForMessageDelivery, BlockHashCount, SlowAdjustingFeeUpdate,
 };
 use sp_consensus_aura::sr25519::AuthorityId as AuraId;
-use sp_runtime::{Perbill, RuntimeDebug, traits::BlakeTwo256};
+use sp_runtime::{Perbill, RuntimeDebug, traits::{BlakeTwo256, Verify}};
 use sp_version::RuntimeVersion;
 use xcm::latest::prelude::BodyId;
 
@@ -334,6 +335,37 @@ impl pallet_utility::Config for Runtime {
     type RuntimeCall = RuntimeCall;
     type RuntimeEvent = RuntimeEvent;
     type WeightInfo = pallet_utility::weights::SubstrateWeight<Runtime>;
+}
+
+parameter_types! {
+    // Minimum 4 CENTS/byte
+    pub const BasicDeposit: Balance = currency_helper::deposit(1, 258);
+    pub const ByteDeposit: Balance = currency_helper::deposit(0, 1);
+    pub const SubAccountDeposit: Balance = currency_helper::deposit(1, 53);
+    pub const MaxSubAccounts: u32 = 100;
+    pub const MaxAdditionalFields: u32 = 100;
+    pub const MaxRegistrars: u32 = 20;
+}
+
+impl pallet_identity::Config for Runtime {
+    type BasicDeposit = BasicDeposit;
+    type ByteDeposit = ByteDeposit;
+    type Currency = Balances;
+    type ForceOrigin = EnsureRoot<Self::AccountId>;
+    type IdentityInformation = IdentityInfo<MaxAdditionalFields>;
+    type MaxRegistrars = MaxRegistrars;
+    type MaxSubAccounts = MaxSubAccounts;
+    type MaxSuffixLength = ConstU32<7>;
+    type MaxUsernameLength = ConstU32<32>;
+    type OffchainSignature = Signature;
+    type PendingUsernameExpiration = ConstU32<{ 7 * DAYS }>;
+    type RegistrarOrigin = EnsureRoot<Self::AccountId>;
+    type RuntimeEvent = RuntimeEvent;
+    type SigningPublicKey = <Signature as Verify>::Signer;
+    type Slashed = ();
+    type SubAccountDeposit = SubAccountDeposit;
+    type UsernameAuthorityOrigin = EnsureRoot<Self::AccountId>;
+    type WeightInfo = pallet_identity::weights::SubstrateWeight<Runtime>;
 }
 
 parameter_types! {
